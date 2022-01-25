@@ -1,0 +1,33 @@
+---
+title: "Lab 1"
+author: "Jude Sullivan"
+date: "1/20/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Welcome everyone! My name is Jude and I am a senior at the University of South
+Florida. I am majoring in Psychology and Aging Sciences and hope to attend a graduate
+program in Social Psychology next semester. 
+
+Fun fact: I have visited 7 countries and love to travel in my free time! 
+
+![Picture of Spain!](image.jpg)
+
+
+## Exploring Penguins
+
+Let's explore some penguins!
+
+```{r penguins}
+install.packages("palmerpenguins")
+
+palmerpenguins::penguins
+
+```
+

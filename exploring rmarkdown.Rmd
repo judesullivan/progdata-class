@@ -1,0 +1,26 @@
+---
+title: "Exploring RMarkdown"
+author: "Jude Sullivan"
+date: "1/20/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tibble)
+```
+
+```{r  mtcars_tbl}
+mtcars_tbl <- as_tibble(mtcars)
+
+mtcars
+mtcars_tbl
+
+knitr::kable(mtcars_tbl)
+```
+
