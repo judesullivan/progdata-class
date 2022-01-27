@@ -16,7 +16,7 @@ library(tibble)
 ```
 
 ```{r  mtcars_tbl}
-mtcars_tbl <- as_tibble(mtcars)
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
 
 mtcars
 mtcars_tbl

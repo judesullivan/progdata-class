@@ -172,7 +172,7 @@ pre code {
 
 
 <pre class="r"><code>library(tibble)</code></pre>
-<pre class="r"><code>mtcars_tbl &lt;- as_tibble(mtcars)
+<pre class="r"><code>mtcars_tbl &lt;- as_tibble(mtcars, rownames = &quot;model&quot;)
 
 mtcars</code></pre>
 <pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
@@ -209,24 +209,25 @@ mtcars</code></pre>
 ## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 ## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
 <pre class="r"><code>mtcars_tbl</code></pre>
-<pre><code>## # A tibble: 32 x 11
-##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
-##  2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
-##  3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
-##  4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
-##  5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
-##  6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
-##  7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
-##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
-##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+<pre><code>## # A tibble: 32 x 12
+##    model         mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Mazda RX4    21       6  160    110  3.9   2.62  16.5     0     1     4     4
+##  2 Mazda RX4 ~  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+##  3 Datsun 710   22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+##  4 Hornet 4 D~  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+##  5 Hornet Spo~  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+##  6 Valiant      18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+##  7 Duster 360   14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+##  8 Merc 240D    24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+##  9 Merc 230     22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+## 10 Merc 280     19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
 ## # ... with 22 more rows</code></pre>
 <pre class="r"><code>knitr::kable(mtcars_tbl)</code></pre>
 <table>
 <thead>
 <tr class="header">
+<th align="left">model</th>
 <th align="right">mpg</th>
 <th align="right">cyl</th>
 <th align="right">disp</th>
@@ -242,6 +243,7 @@ mtcars</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">Mazda RX4</td>
 <td align="right">21.0</td>
 <td align="right">6</td>
 <td align="right">160.0</td>
@@ -255,6 +257,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Mazda RX4 Wag</td>
 <td align="right">21.0</td>
 <td align="right">6</td>
 <td align="right">160.0</td>
@@ -268,6 +271,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
+<td align="left">Datsun 710</td>
 <td align="right">22.8</td>
 <td align="right">4</td>
 <td align="right">108.0</td>
@@ -281,6 +285,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="even">
+<td align="left">Hornet 4 Drive</td>
 <td align="right">21.4</td>
 <td align="right">6</td>
 <td align="right">258.0</td>
@@ -294,6 +299,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
+<td align="left">Hornet Sportabout</td>
 <td align="right">18.7</td>
 <td align="right">8</td>
 <td align="right">360.0</td>
@@ -307,6 +313,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Valiant</td>
 <td align="right">18.1</td>
 <td align="right">6</td>
 <td align="right">225.0</td>
@@ -320,6 +327,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
+<td align="left">Duster 360</td>
 <td align="right">14.3</td>
 <td align="right">8</td>
 <td align="right">360.0</td>
@@ -333,6 +341,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Merc 240D</td>
 <td align="right">24.4</td>
 <td align="right">4</td>
 <td align="right">146.7</td>
@@ -346,6 +355,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
+<td align="left">Merc 230</td>
 <td align="right">22.8</td>
 <td align="right">4</td>
 <td align="right">140.8</td>
@@ -359,6 +369,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Merc 280</td>
 <td align="right">19.2</td>
 <td align="right">6</td>
 <td align="right">167.6</td>
@@ -372,6 +383,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
+<td align="left">Merc 280C</td>
 <td align="right">17.8</td>
 <td align="right">6</td>
 <td align="right">167.6</td>
@@ -385,6 +397,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Merc 450SE</td>
 <td align="right">16.4</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -398,6 +411,7 @@ mtcars</code></pre>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
+<td align="left">Merc 450SL</td>
 <td align="right">17.3</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -411,6 +425,7 @@ mtcars</code></pre>
 <td align="right">3</td>
 </tr>
 <tr class="even">
+<td align="left">Merc 450SLC</td>
 <td align="right">15.2</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -424,6 +439,7 @@ mtcars</code></pre>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
+<td align="left">Cadillac Fleetwood</td>
 <td align="right">10.4</td>
 <td align="right">8</td>
 <td align="right">472.0</td>
@@ -437,6 +453,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Lincoln Continental</td>
 <td align="right">10.4</td>
 <td align="right">8</td>
 <td align="right">460.0</td>
@@ -450,6 +467,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
+<td align="left">Chrysler Imperial</td>
 <td align="right">14.7</td>
 <td align="right">8</td>
 <td align="right">440.0</td>
@@ -463,6 +481,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Fiat 128</td>
 <td align="right">32.4</td>
 <td align="right">4</td>
 <td align="right">78.7</td>
@@ -476,6 +495,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
+<td align="left">Honda Civic</td>
 <td align="right">30.4</td>
 <td align="right">4</td>
 <td align="right">75.7</td>
@@ -489,6 +509,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Toyota Corolla</td>
 <td align="right">33.9</td>
 <td align="right">4</td>
 <td align="right">71.1</td>
@@ -502,6 +523,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
+<td align="left">Toyota Corona</td>
 <td align="right">21.5</td>
 <td align="right">4</td>
 <td align="right">120.1</td>
@@ -515,6 +537,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="even">
+<td align="left">Dodge Challenger</td>
 <td align="right">15.5</td>
 <td align="right">8</td>
 <td align="right">318.0</td>
@@ -528,6 +551,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
+<td align="left">AMC Javelin</td>
 <td align="right">15.2</td>
 <td align="right">8</td>
 <td align="right">304.0</td>
@@ -541,6 +565,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Camaro Z28</td>
 <td align="right">13.3</td>
 <td align="right">8</td>
 <td align="right">350.0</td>
@@ -554,6 +579,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
+<td align="left">Pontiac Firebird</td>
 <td align="right">19.2</td>
 <td align="right">8</td>
 <td align="right">400.0</td>
@@ -567,6 +593,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Fiat X1-9</td>
 <td align="right">27.3</td>
 <td align="right">4</td>
 <td align="right">79.0</td>
@@ -580,6 +607,7 @@ mtcars</code></pre>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
+<td align="left">Porsche 914-2</td>
 <td align="right">26.0</td>
 <td align="right">4</td>
 <td align="right">120.3</td>
@@ -593,6 +621,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="even">
+<td align="left">Lotus Europa</td>
 <td align="right">30.4</td>
 <td align="right">4</td>
 <td align="right">95.1</td>
@@ -606,6 +635,7 @@ mtcars</code></pre>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
+<td align="left">Ford Pantera L</td>
 <td align="right">15.8</td>
 <td align="right">8</td>
 <td align="right">351.0</td>
@@ -619,6 +649,7 @@ mtcars</code></pre>
 <td align="right">4</td>
 </tr>
 <tr class="even">
+<td align="left">Ferrari Dino</td>
 <td align="right">19.7</td>
 <td align="right">6</td>
 <td align="right">145.0</td>
@@ -632,6 +663,7 @@ mtcars</code></pre>
 <td align="right">6</td>
 </tr>
 <tr class="odd">
+<td align="left">Maserati Bora</td>
 <td align="right">15.0</td>
 <td align="right">8</td>
 <td align="right">301.0</td>
@@ -645,6 +677,7 @@ mtcars</code></pre>
 <td align="right">8</td>
 </tr>
 <tr class="even">
+<td align="left">Volvo 142E</td>
 <td align="right">21.4</td>
 <td align="right">4</td>
 <td align="right">121.0</td>

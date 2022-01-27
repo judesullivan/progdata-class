@@ -11,23 +11,86 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-Welcome everyone! My name is Jude and I am a senior at the University of South
-Florida. I am majoring in Psychology and Aging Sciences and hope to attend a graduate
-program in Social Psychology next semester. 
+Welcome everyone! My name is Jude and I am a senior at the *University of South Florida*. 
+I am majoring in **Psychology** and **Aging Sciences** and hope to attend a graduate
+program in **Social Psychology** in the fall. 
 
-Fun fact: I have visited 7 countries and love to travel in my free time! 
+### Research Interests
 
-![Picture of Spain!](image.jpg)
+- Intersectionality, specifically through race/ethnicity, gender, and sexual orientation
+- Stereotypes, stigma, and prejudice
+- Self-construal in diverse individuals
+- Health outcomes and disparities
+- Life course approaches
+
+### Hobbies
+
+In my free time, I love to travel, try out new recipes, and go thrifting with friends. 
+Since the pandemic broke out, I have accumulated nearly 20 plants!
+
+Fun fact: I have visited 7 countries:
+
+- Canada
+- Jamaica
+- Spain
+- Italy
+- France
+- Malta
+- England
+
+![Picture of Mdina, Malta](malta.jpg)
+
+![Picture of Genoa, Italy](genoa.jpg)
+
+![Picture in Sicily, Italy](sicily.jpg)
+
 
 
 ## Exploring Penguins
 
 Let's explore some penguins!
 
+```{r}
+library(tibble)
+```
+
 ```{r penguins}
-install.packages("palmerpenguins")
+library(palmerpenguins)
 
 palmerpenguins::penguins
 
+penguins_tbl <- as_tibble(penguins)
+
+penguins
+penguins_tbl
+
+knitr::kable(penguins_tbl)
+
 ```
 
+What is the average bill length of all penguins in the sample?
+
+```{r penguin bill length}
+penguins$bill_length_mm
+
+mean(penguins$bill_length_mm, na.rm = TRUE)
+
+```
+
+How many penguins are female in the sample?
+
+```{r penguin female}
+penguins$sex
+
+summary(penguins$sex)
+
+```
+
+How much did the smallest penguin weigh?
+
+```{r penguin body mass}
+penguins$body_mass_g
+
+min(penguins$body_mass_g, na.rm = TRUE)
+
+```
