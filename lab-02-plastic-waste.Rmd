@@ -54,9 +54,9 @@ ggplot(data = plastic_waste) +
 #histogram & density by continent 
 
 ggplot(data = plastic_waste) +
-  aes(x = plastic_waste_per_cap) +
-  geom_density(aes(y = after_stat(count)), binwidth = 0.2) +
-  facet_wrap(~continent)
+  aes(x = plastic_waste_per_cap,
+      color = continent) +
+  geom_density(aes(y = after_stat(count)), binwidth = 0.2) 
 
 ```
 
