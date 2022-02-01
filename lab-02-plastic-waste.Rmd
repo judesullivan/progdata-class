@@ -68,10 +68,10 @@ ggplot(data = plastic_waste) +
   aes(x = plastic_waste_per_cap,
       fill =  continent,
       color = continent) +
-  geom_density(binwidth = 0.2) +
-  facet_wrap(~continent)
+  geom_density(binwidth = 0.2) 
 
-#Per instructions to describe why the placement of "alpha" is important, I believe I used facet wrong and should have overlapping plots by country rather than separate plots for each country... 
+
+#add alpha!!!!!!!!!
 
 ```
 
@@ -83,8 +83,7 @@ ggplot(data = plastic_waste) +
   aes(x = plastic_waste_per_cap,
       fill =  continent,
       color = continent) +
-  geom_boxplot(binwidth = 0.2) +
-  facet_wrap(~continent)
+  geom_boxplot(binwidth = 0.2) 
 
 ```
 
