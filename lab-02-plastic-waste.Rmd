@@ -14,8 +14,11 @@ library(tidyverse)
 ```
 
 ```{r load-data, message=FALSE}
-install.packages("here")
+
+#install.packages("here")
+
 plastic_waste <- read.csv(here::here("data/plastic-waste.csv"))
+
 ```
 
 ## Exercises
@@ -25,18 +28,131 @@ plastic_waste <- read.csv(here::here("data/plastic-waste.csv"))
 Remove this text, and add your answer for Exercise 1 here.
 
 ```{r plastic-waste-continent}
-# insert code here
+
+#histograms by continent 
+
+ggplot(data = plastic_waste) +
+  aes(x = plastic_waste_per_cap) +
+  geom_histogram(binwidth = 0.2) +
+  facet_wrap(~continent)
+
+```
+
+```{r plastic-waste-continent; density}
+
+#density by continent
+
+ggplot(data = plastic_waste) +
+  aes(x = plastic_waste_per_cap) +
+  geom_density(binwidth = 0.2) +
+  facet_wrap(~continent)
+
+```
+
+```{r plastic-waste-continent; histogram & density}
+
+#histogram & density by continent 
+
+ggplot(data = plastic_waste) +
+  aes(x = plastic_waste_per_cap) +
+  geom_density(aes(y = after_stat(count)), binwidth = 0.2) +
+  facet_wrap(~continent)
+
+```
+
+```{r plastic-waste-continent; density colored}
+
+#colored density by continent 
+
+ggplot(data = plastic_waste) +
+  aes(x = plastic_waste_per_cap,
+      fill =  continent,
+      color = continent) +
+  geom_density(binwidth = 0.2) +
+  facet_wrap(~continent)
+
+#Per instructions to describe why the placement of "alpha" is important, I believe I used facet wrong and should have overlapping plots by country rather than separate plots for each country... 
+
 ```
 
 ### Exercise 2
 
-```{r plastic-waste-density}
-# insert code here
+```{r plastic-waste-density; boxplot }
+
+ggplot(data = plastic_waste) +
+  aes(x = plastic_waste_per_cap,
+      fill =  continent,
+      color = continent) +
+  geom_boxplot(binwidth = 0.2) +
+  facet_wrap(~continent)
+
+```
+
+```{r plastic-waste-density; raincloud}
+
+#install.packages("ggdist")
+
+ggplot(data = plastic_waste) +
+  aes(y = continent,
+      x = plastic_waste_per_cap,
+      fill = continent,
+      color = continent) +
+  geom_jitter(height = .15) +
+  geom_boxplot(color = "black",
+               alpha = .5,
+               width = .1,
+               size = .5) +
+  ggdist::stat_slab(height = .3,
+                    color = "black",
+                    size = .2,
+                    alpha = .5,
+                    position = position_nudge(y = .2))
+
 ```
 
 ### Exercise 3
 
 Remove this text, and add your answer for Exercise 3 here.
+
+```{r plastic-waste-density; scatterplot}
+
+ggplot(data = plastic_waste) +
+  aes(y = plastic_waste_per_cap,
+      x = mismanaged_plastic_waste_per_cap,
+      fill = continent,
+      color = continent,
+      shape = continent) +
+  geom_point()
+
+```
+
+```{r plastic-waste-density; scatterplot w/ population}
+
+#plastic_waste_per_cap x total_pop 
+
+ggplot(data = plastic_waste) +
+  aes(y = plastic_waste_per_cap,
+      x = total_pop,
+      fill = continent,
+      color = continent,
+      shape = continent) +
+  geom_point()
+
+#plastic_waste_per_cap x coastal_pop
+
+ggplot(data = plastic_waste) +
+  aes(y = plastic_waste_per_cap,
+      x = coastal_pop,
+      fill = continent,
+      color = continent,
+      shape = continent) +
+  geom_point()
+
+#upon further investigation, it seems as though the outliers should not be there :O
+
+```
+
+
 
 ### Exercise 4
 
