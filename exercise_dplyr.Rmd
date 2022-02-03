@@ -118,22 +118,41 @@ gapminder |>
 1. Only keep data with population greater than 100 million.
 
 ```{r}
+library(tidyverse)
+library(gapminder)
+
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter(pop > 100000000)
 ```
 
 2. Only keep data _from Asia_ with population greater than 100 million.
 
 ```{r}
+library(tidyverse)
+library(gapminder)
+
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter(continent == "Asia", pop > 100000000)
 ```
 
 3. Only keep data _from the countries Brazil and China_ with population greater than 100 million.
 
 ```{r}
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter((country == "Brazil" | country == "China") & pop > 100000000)
+
+# remember that == compares by element 
+# "c" creates a vector; here, it creates a vector within "country" for just China and Brazil and then looks at the population
+
+gapminder |>
+  filter(country %in% c("Brazil", "China") & pop > 100000000)
+
+# another method!
+allowed_countries <- c("Brazil", "China")
+
+gapminder |>
+  filter(country %in% allowed_countries & pop > 100000000)
+
 ```
 
 
@@ -155,7 +174,10 @@ Let's get:
 
 ```{r}
 gapminder |>
-  mutate(FILL_THIS_IN)
+  mutate(
+    grossGDP = gdpPercap * pop,
+    gdpBill = round(grossGDP / 1000000000, 2)
+    )
 ```
 
 Notice the backwards compatibility! No need for loops!
@@ -164,7 +186,9 @@ Try the same thing, but with `transmute` (drops all other variables).
 
 ```{r}
 gapminder |>
-  transmute(FILL_THIS_IN)
+  transmute(grossGDP = gdpPercap * pop,
+    gdpBill = round(grossGDP / 1000000000, 2)
+    )
 ```
 
 The `if_else` function is useful for changing certain elements in a data frame.
@@ -173,7 +197,9 @@ Example: Suppose Canada's 1952 life expectancy was mistakenly entered as 68.8 in
 
 ```{r}
 gapminder |>
-  mutate(FILL_THIS_IN)
+  mutate(
+    lifeExp = if_else(country == "Canada" & year == 1952, true = 70, false = lifeExp)
+  )
 ```
 
 Your turn: 
@@ -249,6 +275,11 @@ Like `mutate()`, `summarize()` will compute a new column, but each column needs 
 
 ```{r}
 gapminder |> 
+  summarize(mean = mean(lifeExp),
+            sd = sd(lifeExp))
+
+
+gapminder |> 
   summarize(mu = mean(lifeExp),
             sigma = sd(lifeExp))
 ```
@@ -258,7 +289,19 @@ When you group a data frame, all operations on that data frame are done **separa
 
 ```{r}
 gapminder |> 
-  group_by(year)
+  group_by(continent, year)
+
+#can also create new varible within group_by
+
+gapminder |> 
+  group_by(smallLifeExp = lifeExp < 60)
+
+#example
+
+gapminder |> 
+  group_by(continent, year) |> 
+  summarize(mu    = mean(lifeExp),
+            sigma = sd(lifeExp))
 ```
 
 See how the printing of the tibble now says it is grouped?
@@ -284,7 +327,10 @@ You can also combine `group_by()` with `mutate()` to create new variables by gro
 ```{r}
 gapminder |> 
   group_by(year) |> 
-  mutate(lifeExp_center = lifeExp - mean(lifeExp, na.rm = TRUE)) |> 
+  mutate(
+    meanLifeExp = mean(lifeExp),
+    lifeExp_center = lifeExp - mean(lifeExp, na.rm = TRUE),
+    ) |> 
   ungroup()
 ```
 
