@@ -452,3 +452,123 @@ If there's time remaining, we'll practice with these exercises.
       following code: `?tidyselect::select_helpers`.
 
 5. Filter the rows of `palmerpenguins::penguins` for bill_lenth_mm >= 40 and flipper_length_mm >= 200.
+
+
+
+
+# Advanced dplyr functions 2/8/2022 
+
+```{r}
+library(psychTools)
+
+dat_bfi <- psychTools::bfi |> 
+  rownames_to_column(var = ".id") |> 
+  as_tibble()
+    
+#glimpse function is cute! puts data on side
+
+glimpse(dat_bfi)
+    
+#recoding gender; old values = new values because mutate function is backwordss
+
+dat_bfi |> 
+  mutate(gender = recode(gender, "1" = "man", "2" ="woman")) |> 
+  glimpse()
+
+#education
+
+dat_bfi$education |> unique()
+
+#more tedious way to do this without using across function
+
+dat_bfi |>
+  group_by(gender) |>
+  summarize(
+    A1 = mean(A1),
+    A2 = mean(A2),
+    A3 = mean(A3)
+  )
+
+dat_bfi |>
+  group_by(gender) |>
+  summarize(
+    across(
+      A1:A5,
+      mean,
+      na.rm = TRUE
+    )
+  )
+
+#making own function; shortcut is backslash \
+
+add1 <- function(x) x + 1
+add1(3)
+
+#writing function in across
+
+dat_bfi |>
+  group_by(gender) |>
+  summarize(
+    across(
+      A1:A5,
+      \(x) mean(x, na.rm = TRUE)
+    )
+  )
+
+#can do multiple functions in across; use list to create a pile of functions
+
+dat_bfi |>
+  group_by(gender) |>
+  summarize(
+    across(
+      A1:A5,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    )
+  )
+
+#recoding with across; reverse coding scale items
+
+dat_bfi |>
+  mutate(
+    A1r = recode(
+      A1, 
+      "6" = 1, "5" = 2, "4" = 3, "3" = 4, "2" = 5, "1" = 6
+    )
+  ) |>
+  select(A1, A1r) |> 
+  head()
+
+# or
+
+dat_bfi |>
+  mutate(A1r = max(A1, na.rm = TRUE) - A1 + min(A1, na.rm = TRUE)) |>
+  select(A1, A1r) |> 
+  head()
+
+#look at dictonary to see which items are reverse-scored
+
+reversed <- c("A1", "C4", "C5", "E1", "E2", "O2", "O5")
+
+# or
+
+dict <- psychTools::bfi.dictionary |>
+  as_tibble(rownames = "item")
+
+reversed <- dict |>
+  filter(Keying == -1) |>
+  pull(item)
+
+#putting everything together !; remember, the first argument inside across is columns; adding .names made new columns with new names instead of overriding previous data; {} calls on current column names and then adds r to indicate reverse score value
+
+dat_bfi |>
+  mutate(across(
+    all_of(reversed),
+    \(x) recode(x, "6" = 1, "5" = 2, "4" = 3, "3" = 4, "2" = 5, "1" = 6),
+    .names = "{.col}r"
+  )) |>
+  head() |> 
+  glimpse()
+```
