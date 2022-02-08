@@ -14,7 +14,7 @@ library(gapminder)
 ```
 
 
-#Exercise 1
+# Exercise 1
 
 ## 1.1
 
@@ -51,7 +51,7 @@ diff(x, lag = 3)
 
 ```
 
-##1.4
+## 1.4
 
 ```{r country, year, max gdp}
 gapminder |> 
@@ -60,7 +60,7 @@ gapminder |>
 
 ```
 
-##1.5
+## 1.5
 
 ```{r scatterplot, canada, lifeexp, gdp}
 gapminder |> 
@@ -83,7 +83,7 @@ aes(x = gdpPercap, y = lifeExp) +
 
 ```
 
-#Exercise 2
+# Exercise 2
 
 ```{r ex2}
 datasets::iris
@@ -96,7 +96,7 @@ knitr::kable(iris_tbl)
 
 ```
 
-##2.1
+## 2.1
 
 ```{r summary, scatterplot}
 summarize(iris, mean(Sepal.Length), sd(Sepal.Length), range(Sepal.Length), 
@@ -147,7 +147,7 @@ ggplot(iris) +
 
 ```
 
-#Bonus Exercise
+# Bonus Exercise
 
 Evaluate this code and describe the result. The goal was to get the data for Rwanda and Afghanistan. Does this work? Why or why not? If not, what is the correct way to do this?
 
