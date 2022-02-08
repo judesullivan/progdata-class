@@ -49,6 +49,22 @@ x <- c(71.930, 70.723, 72.340, 73.490, 72.649, 73.680)
 
 diff(x, lag = 3)
 
+#update: i did this wrong :P 
+
+new_gap <- gapminder |> 
+  arrange(year) |> 
+  group_by(country) |> 
+  mutate(lifeExp_change = lifeExp - lag(lifeExp)) |> 
+  filter(lifeExp_change < 0) 
+
+#to find the largest drop in lifeExp; must stop grouping by country
+
+new_gap <- gapminder |> 
+  arrange(year) |> 
+  mutate(lifeExp_change = lifeExp - lag(lifeExp)) |> 
+  filter(lifeExp_change < 0) |> 
+  filter(lifeExp_change == min(lifeExp_change))
+
 ```
 
 ## 1.4
