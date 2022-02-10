@@ -5,6 +5,8 @@ date: "2/10/2022"
 output: html_document
 ---
 
+# In this lab, You will analyze data looking at the relationship between green reputation and three personality traits– compassion, intellectual curiosity, and openness to experiences. The dataset includes data from students and non-students.
+
 ```{r setup, include=FALSE}
 # Load the tidyverse package
 
@@ -23,7 +25,34 @@ green_data <- readr::read_csv(here::here("data", "green_data.csv"))
 ## 1. Inspect the item responses (e.g., with graphs or by summarizing distinct values). Is anything unusual?
 
 ```{r graphs/summaries}
+#making green reputation composite variable
 
+greenrep <- (green_data c(green1, green2, green3, green4, green5))
+
+
+green_data |> 
+  rowwise() |> 
+  mutate(
+    id = id,
+    greenrep_total = mean(c_across(green1:green5), na.rm = TRUE),
+    compassion_total = mean(c_across(comp1:comp10), na.rm = TRUE),
+    intelcur_total = mean(c_across(intel1:intel10), na.rm = TRUE),
+    open_total = mean(c_across(open1:open10), na.rm = TRUE),
+    .before = everything()
+  ) |>
+  head() 
+
+
+  
+```
+
+```{r graphs/summaries}
+green_data |> 
+  rowwise() |> 
+  summarize(
+    mean = mean(l),
+    sd = sd(lifeExp)
+  )
 ```
 
 ## 2. Compute total scores for the four scales. Recode variables as needed.
