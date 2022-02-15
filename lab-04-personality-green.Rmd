@@ -27,7 +27,8 @@ green_data <- readr::read_csv(here::here("data", "green_data.csv"))
 ```{r graphs/summaries}
 #making green reputation composite variable
 
-greenrep <- (green_data c(green1, green2, green3, green4, green5))
+greenrep <- c("green1", "green2", "green3", "green4", "green5")
+compassion <- c("comp1", "comp2", "comp3", "comp4", "comp5", "comp6", "comp7", "comp8", "comp9", "comp10")
 
 
 green_data |> 
@@ -42,8 +43,70 @@ green_data |>
   ) |>
   head() 
 
+#help from class 2/15
+#unlist function breaks up the data and creates a large matrix basically
 
+green_data |> 
+  select(-id) |> 
+  unlist() |> 
+  unique()
+
+#since we identified -99 as a value in the dataset, we can now recode
+
+green_data <- green_data |> 
+  mutate(
+    across(
+      -id,
+           \(x) recode(x, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "-99" = NA_real_)
+           )
+  )
   
+#reverse coding specific items; either look at the keying in the dictionary and write them down or select keying and filter
+
+dictionary |> 
+  filter(Keying == -1) |> 
+  pull(Item)
+
+#tedious method by running each one individually
+
+#green_data <- green_data |> 
+#  mutate(
+#    green2 = recode(green2, "1"= 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)
+#  )
+
+#mutating multiple columns at once
+
+reversed <- c( "green2", "comp6", "comp7",  "comp8", "comp9", "comp10", "intel7", "intel8", "intel9", "intel10", "open7", "open8", "open9", "open10")
+
+green_data <- green_data |> 
+  mutate(
+    across(
+      all_of(reversed),
+      \(x) recode(x, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)
+    )
+  )
+
+green_data <- green_data |> 
+  rowwise() |> 
+  mutate(
+    green_total = mean(c_across(green1 : green5), na.rm = TRUE),
+    comp_total = mean(c_across(comp1 : comp10), na.rm = TRUE),
+    intel_total = mean(c_across(intel1 : intel10), na.rm = TRUE),
+    open_total = mean(c_across(open1 : open10), na.rm = TRUE),
+    .after = id
+  ) |> 
+  ungroup()
+  
+#that does not seem to work hehe
+
+green_data <- green_data |> 
+  mutate(
+    across(
+      green_total open_total,
+      \(x) 100 * (x-1) / (5-1)
+    )
+  )
+
 ```
 
 ```{r graphs/summaries}
@@ -53,6 +116,11 @@ green_data |>
     mean = mean(l),
     sd = sd(lifeExp)
   )
+
+
+ggplot(green_data) + 
+aes(x = greenrep, y = compassion) +
+  geom_point() 
 ```
 
 ## 2. Compute total scores for the four scales. Recode variables as needed.
