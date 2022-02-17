@@ -571,4 +571,39 @@ dat_bfi |>
   )) |>
   head() |> 
   glimpse()
+
+#2/10 class
+
+#use "?starts_with" to see the different selections available for the across function; such as selecting all the columns that contain "aggression" in their name
+
+#using rowwise
+
+#for one variable; use c_across because it allows you to average per row across multiple columns; with just c, you would have to add the A columns individually
+
+#always want to ungroup before running onto another chunk of code when working with rowwise or group_by
+
+dat_bfi |>
+  rowwise() |> 
+  mutate(
+    .id = .id,
+    A_total = mean(c_across(A1:A5), na.rm = TRUE), .before = "A1") |> 
+  ungroup()
+
+#for multiple columns
+
+dat_bfi |>
+  rowwise() |> 
+  mutate(
+    .id = .id,
+    A_total = mean(c_across(A1:A5), na.rm = TRUE),
+    C_total = mean(c_across(C1:C5), na.rm = TRUE),
+    E_total = mean(c_across(E1:E5), na.rm = TRUE),
+    N_total = mean(c_across(N1:N5), na.rm = TRUE),
+    O_total = mean(c_across(O1:O5), na.rm = TRUE),
+    .before = everything()
+  ) |>
+  head() |> 
+  ungroup()
+
+
 ```
