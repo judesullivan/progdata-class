@@ -69,10 +69,10 @@ dictionary |>
 
 #tedious method by running each one individually
 
-#green_data <- green_data |> 
-#  mutate(
-#    green2 = recode(green2, "1"= 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)
-#  )
+# green_data <- green_data |> 
+#   mutate(
+#     green2 = recode(green2, "1"= 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)
+#   )
 
 #mutating multiple columns at once
 
@@ -86,26 +86,46 @@ green_data <- green_data |>
     )
   )
 
+#computing total scores 
+
 green_data <- green_data |> 
   rowwise() |> 
   mutate(
-    green_total = mean(c_across(green1 : green5), na.rm = TRUE),
-    comp_total = mean(c_across(comp1 : comp10), na.rm = TRUE),
-    intel_total = mean(c_across(intel1 : intel10), na.rm = TRUE),
-    open_total = mean(c_across(open1 : open10), na.rm = TRUE),
+    green_total = mean(c_across(green1:green5), na.rm = TRUE),
+    comp_total = mean(c_across(comp1:comp10), na.rm = TRUE),
+    intel_total = mean(c_across(intel1:intel10), na.rm = TRUE),
+    open_total = mean(c_across(open1:open10), na.rm = TRUE),
     .after = id
   ) |> 
   ungroup()
   
 #that does not seem to work hehe
 
+#pomping
+
 green_data <- green_data |> 
   mutate(
     across(
-      green_total open_total,
-      \(x) 100 * (x-1) / (5-1)
+      green_total:open_total,
+      \(x) 100 * (x-1) / (5-1),
+      .names = "{.col}_pomp"
     )
   )
+
+#plotting
+
+ggplot(green_data) +
+  aes(x = green_total_pomp) +
+  geom_histogram()
+
+#dropping NA students and creating linear lines
+
+green_data |> 
+  filter(!is.na(student)) |> 
+  ggplot() +
+  aes(x = open_total_pomp, y = green_total_pomp, color = factor(student)) +
+  geom_point() +
+  geom_smooth(method = "lm")
 
 ```
 
