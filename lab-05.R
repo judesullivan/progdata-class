@@ -86,4 +86,7 @@ family |>
   which(is.na(c(family)))
 
 
+#use filter instead
+
+
 
