@@ -29,12 +29,12 @@ time |>
 # 4. Which artists are in time, but not in album?
 
 time |> 
-  anti_join(album, by = "FILL_THIS_IN")
+  anti_join(album, by = "artist_name")
 
 # 5. You’ve come across these two tibbles, and just wish all the info was available in one tibble. What would you do?
 
-FILL_THIS_IN |> 
-  FILL_THIS_IN(FILL_THIS_IN, by = "song")
+time |> 
+  full_join(album, by = "song")
 
 # Exercise 2 - LOTR
 
@@ -52,13 +52,13 @@ bind_cols(fell, ttow)
 
 # 1. Stack these into a single tibble.
 
-FILL_THIS_IN(fell, FILL_THIS_IN)
+bind_rows(fell, ttow, retk)
 
 # 2. Which races are present in “The Fellowship of the Ring” (fell), but not in any of the other ones?
 
 fell |> 
-  FILL_THIS_IN(FILL_THIS_IN, by = "Race") |> 
-  FILL_THIS_IN(FILL_THIS_IN, by = "Race")
+  anti_join(ttow, by = "Race") |> 
+  anti_join(retk, by = "Race")
 
 # Exercise 3 - Set Operations
 
@@ -70,11 +70,11 @@ fell |>
 
 # 1. Rows that appear in both y and z
 
-FILL_THIS_IN(y, z)
+inner_join(y, z)
 
 # 2. You collected the data in y on Day 1, and z in Day 2. Make a data set to reflect that.
 
-FILL_THIS_IN(
+full_join(
   mutate(y, day = "Day 1"),
   mutate(z, day = "Day 2")
 )
