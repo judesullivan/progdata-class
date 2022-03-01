@@ -19,7 +19,7 @@ time |>
 # 2. Go ahead and add the corresponding albums to the time tibble, being sure to preserve rows even if album info is not readily available.
 
 time |> 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)
+  full_join(album, by = "album")
 
 # 3. Which songs do we have “year”, but not album info?
 
