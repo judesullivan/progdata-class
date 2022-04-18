@@ -3,7 +3,12 @@ title: "Soybean Production"
 author: "Jude Sullivan"
 date: "4/17/2022"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
+![Soybean development.](images/soybean_development.jpg)
+
+![Soybean.](images/soybean_1.jpg)
 
 # Introduction
 
@@ -35,11 +40,47 @@ as_tibble(soybean_use)
 You can also embed plots, for example:
 
 ```{r total}
+#Sums soybean production that is used for directly for human food, for animal food, and that is processed into other items like vegetable oil and biofuel
+
 soybean_use <- soybean_use|> 
   group_by(entity, code, year) |> 
   mutate(use_total = c_across(human_food:processed) |> 
-         sum(na.rm = TRUE))
+         sum(na.rm = TRUE)) |> 
+  ungroup()
 
+#Filters by the most recent year (2013) and shows which entities had the greatest combined soybean production
+
+soybean_use_2013 <- soybean_use |> 
+  rowwise() |> 
+  group_by(entity)  |>
+  filter(year == 2013) |> 
+  arrange(-use_total) |> 
+  as_tibble()
+ 
+#Finding percentage of human food, animal food, and processed item usage from the total
+
+soybean_use_2013 |> 
+  group_by(entity) |> 
+  mutate(
+    human_percent = (human_food / use_total) * 100,
+    animal_percent = (animal_feed / use_total) * 100,
+    processed_percent = (processed / use_total) * 100
+    ) |> 
+  as_tibble()
+
+#human percent in united states over the years
+
+soybean_use |> 
+  group_by(entity) |> 
+  mutate(
+    human_percent = (human_food / use_total) * 100,
+    animal_percent = (animal_feed / use_total) * 100,
+    processed_percent = (processed / use_total) * 100
+    ) |> 
+  filter(entity %in% "United States") |> 
+  as.data.frame()
+
+#most of the decrease in percentage used for processed goods 
 
 ```
 
