@@ -1,0 +1,40 @@
+---
+title: "Soybean Production"
+author: "Jude Sullivan"
+date: "4/17/2022"
+output: html_document
+---
+
+# Introduction
+
+Soybean production contributes to household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows. This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels -- consuming soy products and other food items like corn and grains directly rather than feeding them to animals. 
+
+How much of the soybean that has been produced in recent years has been used for human compared to animal consumption? Is more soybean being used to feed animals now than ever before? Has the popularity of soybean increased for human consumption in the United States over time?
+
+Who produces the most soybean and what do they use it for?
+
+## Question 1
+
+```{r setup, include=FALSE}
+#Load packages
+
+library(tidyverse)
+library(dplyr)
+```
+
+
+```{r soybean dataset}
+soybean_use <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/soybean_use.csv')
+
+as_tibble(soybean_use)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

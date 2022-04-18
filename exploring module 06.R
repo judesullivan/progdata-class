@@ -1,4 +1,4 @@
-#2/1 Class 
+# 3/1 Class -- Organizing Projects
 
 library(gapminder)
 library(tidyverse)
