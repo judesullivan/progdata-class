@@ -24,6 +24,7 @@ library(dplyr)
 
 
 ```{r soybean dataset}
+#Import data
 soybean_use <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/soybean_use.csv')
 
 as_tibble(soybean_use)
@@ -33,8 +34,13 @@ as_tibble(soybean_use)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r total}
+soybean_use <- soybean_use|> 
+  group_by(entity, code, year) |> 
+  mutate(use_total = c_across(human_food:processed) |> 
+         sum(na.rm = TRUE))
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
