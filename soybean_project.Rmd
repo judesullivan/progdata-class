@@ -14,6 +14,10 @@ editor_options:
 
 Soybean production contributes to household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows. This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels -- consuming soy products and other food items like corn and grains directly rather than feeding them to animals. 
 
+
+# Objectives
+
+
 How much of the soybean that has been produced in recent years has been used for human compared to animal consumption? Is more soybean being used to feed animals now than ever before? Has the popularity of soybean increased for human consumption in the United States over time?
 
 Who produces the most soybean and what do they use it for?
@@ -102,7 +106,8 @@ ggplot(data = top_countries_2013) +
   geom_bar(stat = "identity",
            color = "darkgreen",
            fill = "darkgreen") +
-  scale_x_discrete(guide = guide_axis(angle = 45))
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  labs(title = "Top 10 Soybean-Producing Countries in 2013")
   
 
 #How has production shifted in the United States over time?
@@ -110,28 +115,34 @@ ggplot(data = top_countries_2013) +
 usa_production_history <- soybean_use |> 
   filter(entity %in% "United States")
 
+#I truncated the x axis to begin at 1980 since soybeans were not used for human food until 1983
+
 ggplot(data = usa_production_history) +
   aes(x = year,
       y = human_food) +
   geom_line(stat = "identity") +
-  coord_cartesian(xlim = c(1980,2013))
+  coord_cartesian(xlim = c(1980,2013)) +
+  labs(title = "USA Human Food Soybean Use from 1961-2013")
 
 ggplot(data = usa_production_history) +
   aes(x = year,
       y = animal_feed) +
   geom_line(stat = "identity") +
-  facet_zoom(xlim = c(2000, 2013))
+  facet_zoom(xlim = c(2000, 2013)) +
+  labs(title = "USA Animal Food Soybean Use from 1961-2013")
 
 ggplot(data = usa_production_history) +
   aes(x = year,
       y = processed) +
-  geom_line(stat = "identity")
+  geom_line(stat = "identity") +
+  labs(title = "USA Processed Soybean Use from 1961-2013")
 
 ggplot(data = usa_production_history) +
   aes(x = year,
       y = use_total) +
   geom_line(stat = "identity") +
-  facet_zoom(xlim = c(2000, 2013))
+  facet_zoom(xlim = c(2000, 2013)) +
+  labs(title = "USA Total Soybean Production from 1961-2013")
 
 ```
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
