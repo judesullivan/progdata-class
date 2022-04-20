@@ -221,7 +221,55 @@ soybean_use &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordat
 ##  9 Africa &lt;NA&gt;   1969      52000        6000      6000
 ## 10 Africa &lt;NA&gt;   1970      52000        6000      8000
 ## # ... with 9,887 more rows</code></pre>
-<p>In this dataset, h</p>
+<div id="soybean_use.csv-variable-table" class="section level3">
+<h3><code>soybean_use.csv</code> Variable Table</h3>
+<table>
+<colgroup>
+<col width="35%" />
+<col width="29%" />
+<col width="35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">class</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">entity</td>
+<td align="left">character</td>
+<td align="left">Country</td>
+</tr>
+<tr class="even">
+<td align="left">code</td>
+<td align="left">character</td>
+<td align="left">Country Code</td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="left">double</td>
+<td align="left">Year</td>
+</tr>
+<tr class="even">
+<td align="left">human_food</td>
+<td align="left">double</td>
+<td align="left">Use for human food (tempeh, tofu, etc)</td>
+</tr>
+<tr class="odd">
+<td align="left">animal_feed</td>
+<td align="left">double</td>
+<td align="left">Used for animal food</td>
+</tr>
+<tr class="even">
+<td align="left">processed</td>
+<td align="left">double</td>
+<td align="left">Processed into vegetable oil, biofuel, processed animal feed</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="objective-1---global-comparisons" class="section level3">
 <h3>Objective 1 - Global Comparisons</h3>
 <pre class="r"><code>#Sums soybean production that is used for directly for human food, for animal food, and that is processed into other items like vegetable oil and biofuel
@@ -2207,123 +2255,682 @@ kable(top_countries_2013)</code></pre>
 <h3>Objective 2 - Exploring the USA</h3>
 <pre class="r"><code>#Developing respective soybean usage percent variables for human, animal, and processed products
 
-soybean_use |&gt; 
+usa_soybean_use &lt;- soybean_use |&gt; 
   group_by(entity) |&gt; 
   mutate(
     human_percent = (human_food / use_total) * 100,
     animal_percent = (animal_feed / use_total) * 100,
     processed_percent = (processed / use_total) * 100
     ) |&gt; 
-  filter(entity %in% &quot;United States&quot;) |&gt; 
-  as.data.frame()</code></pre>
-<pre><code>##           entity code year human_food animal_feed processed use_total
-## 1  United States  USA 1961          0       36000  11050000  11086000
-## 2  United States  USA 1962          0       31000  11730000  11761000
-## 3  United States  USA 1963          0       24000  12873000  12897000
-## 4  United States  USA 1964          0       23000  11893000  11916000
-## 5  United States  USA 1965          0       24000  13036000  13060000
-## 6  United States  USA 1966          0       24000  14616000  14640000
-## 7  United States  USA 1967          0       26000  15214000  15240000
-## 8  United States  USA 1968          0       25000  15676000  15701000
-## 9  United States  USA 1969          0       24000  16493000  16517000
-## 10 United States  USA 1970          0       24000  20058000  20082000
-## 11 United States  USA 1971          0       29000  20684000  20713000
-## 12 United States  USA 1972          0       29000  19623000  19652000
-## 13 United States  USA 1973          0       30000  19650000  19680000
-## 14 United States  USA 1974          0       33000  22344000  22377000
-## 15 United States  USA 1975          0       27000  19078000  19105000
-## 16 United States  USA 1976          0       33000  23542000  23575000
-## 17 United States  USA 1977          0       27000  21506000  21533000
-## 18 United States  USA 1978          0       27000  25221000  25248000
-## 19 United States  USA 1979          0       27000  27701000  27728000
-## 20 United States  USA 1980          0       27000  30573000  30600000
-## 21 United States  USA 1981          0       43000  27774000  27817000
-## 22 United States  USA 1982          0       47000  28033000  28080000
-## 23 United States  USA 1983       3000       35000  30155000  30193000
-## 24 United States  USA 1984       3000       40000  26753000  26796000
-## 25 United States  USA 1985       4000       12000  28032000  28048000
-## 26 United States  USA 1986       5000       55000  28658000  28718000
-## 27 United States  USA 1987       5000       52000  32087000  32144000
-## 28 United States  USA 1988       6000       44000  31952000  32002000
-## 29 United States  USA 1989       7000       54000  28795000  28856000
-## 30 United States  USA 1990       7000       55000  31189000  31251000
-## 31 United States  USA 1991       8000       56000  32305000  32369000
-## 32 United States  USA 1992       9000       62000  34130000  34201000
-## 33 United States  USA 1993      10000       53000  34809000  34872000
-## 34 United States  USA 1994      10000       71000  34728000  34809000
-## 35 United States  USA 1995      10000       62000  38238000  38310000
-## 36 United States  USA 1996      10000       67000  37286000  37363000
-## 37 United States  USA 1997      10000       76000  39082000  39168000
-## 38 United States  USA 1998      10000       78000  43464000  43552000
-## 39 United States  USA 1999      11000       76000  43273000  43360000
-## 40 United States  USA 2000      10000       76000  44625000  44711000
-## 41 United States  USA 2001      11000       78000  46259000  46348000
-## 42 United States  USA 2002      11000       77000  43948000  44036000
-## 43 United States  USA 2003      11000      650000  41622000  42283000
-## 44 United States  USA 2004      12000     2748000  46160000  48920000
-## 45 United States  USA 2005      12000     1932000  47321000  49265000
-## 46 United States  USA 2006      13000     2096000  49152000  51261000
-## 47 United States  USA 2007      13000      900000  49070000  49983000
-## 48 United States  USA 2008      12000     1960000  45233000  47205000
-## 49 United States  USA 2009      10000     2205000  46131000  48346000
-## 50 United States  USA 2010      11000     2205000  44852000  47068000
-## 51 United States  USA 2011      12000     2205000  46349000  48566000
-## 52 United States  USA 2012      11000     2014000  45964000  47989000
-## 53 United States  USA 2013      12000     2240000  47189000  49441000
-##    human_percent animal_percent processed_percent
-## 1    0.000000000     0.32473390          99.67527
-## 2    0.000000000     0.26358303          99.73642
-## 3    0.000000000     0.18608979          99.81391
-## 4    0.000000000     0.19301779          99.80698
-## 5    0.000000000     0.18376723          99.81623
-## 6    0.000000000     0.16393443          99.83607
-## 7    0.000000000     0.17060367          99.82940
-## 8    0.000000000     0.15922553          99.84077
-## 9    0.000000000     0.14530484          99.85470
-## 10   0.000000000     0.11951001          99.88049
-## 11   0.000000000     0.14000869          99.85999
-## 12   0.000000000     0.14756768          99.85243
-## 13   0.000000000     0.15243902          99.84756
-## 14   0.000000000     0.14747285          99.85253
-## 15   0.000000000     0.14132426          99.85868
-## 16   0.000000000     0.13997879          99.86002
-## 17   0.000000000     0.12538894          99.87461
-## 18   0.000000000     0.10693916          99.89306
-## 19   0.000000000     0.09737450          99.90263
-## 20   0.000000000     0.08823529          99.91176
-## 21   0.000000000     0.15458173          99.84542
-## 22   0.000000000     0.16737892          99.83262
-## 23   0.009936078     0.11592091          99.87414
-## 24   0.011195701     0.14927601          99.83953
-## 25   0.014261266     0.04278380          99.94295
-## 26   0.017410683     0.19151752          99.79107
-## 27   0.015555002     0.16177203          99.82267
-## 28   0.018748828     0.13749141          99.84376
-## 29   0.024258386     0.18713612          99.78861
-## 30   0.022399283     0.17599437          99.80161
-## 31   0.024715005     0.17300504          99.80228
-## 32   0.026315020     0.18128125          99.79240
-## 33   0.028676302     0.15198440          99.81934
-## 34   0.028728202     0.20397024          99.76730
-## 35   0.026102845     0.16183764          99.81206
-## 36   0.026764446     0.17932179          99.79391
-## 37   0.025531046     0.19403595          99.78043
-## 38   0.022961058     0.17909625          99.79794
-## 39   0.025369004     0.17527675          99.79935
-## 40   0.022365861     0.16998054          99.80765
-## 41   0.023733494     0.16829205          99.80797
-## 42   0.024979562     0.17485694          99.80016
-## 43   0.026015183     1.53726084          98.43672
-## 44   0.024529845     5.61733442          94.35814
-## 45   0.024358064     3.92164823          96.05399
-## 46   0.025360410     4.08887848          95.88576
-## 47   0.026008843     1.80061221          98.17338
-## 48   0.025421036     4.15210253          95.82248
-## 49   0.020684234     4.56087370          95.41844
-## 50   0.023370443     4.68471148          95.29192
-## 51   0.024708644     4.54021332          95.43508
-## 52   0.022921920     4.19679510          95.78028
-## 53   0.024271354     4.53065270          95.44508</code></pre>
+  filter(entity %in% &quot;United States&quot;) 
+
+kable(usa_soybean_use)</code></pre>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="4%" />
+<col width="4%" />
+<col width="9%" />
+<col width="10%" />
+<col width="8%" />
+<col width="8%" />
+<col width="12%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">entity</th>
+<th align="left">code</th>
+<th align="right">year</th>
+<th align="right">human_food</th>
+<th align="right">animal_feed</th>
+<th align="right">processed</th>
+<th align="right">use_total</th>
+<th align="right">human_percent</th>
+<th align="right">animal_percent</th>
+<th align="right">processed_percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1961</td>
+<td align="right">0</td>
+<td align="right">36000</td>
+<td align="right">11050000</td>
+<td align="right">11086000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.3247339</td>
+<td align="right">99.67527</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1962</td>
+<td align="right">0</td>
+<td align="right">31000</td>
+<td align="right">11730000</td>
+<td align="right">11761000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.2635830</td>
+<td align="right">99.73642</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1963</td>
+<td align="right">0</td>
+<td align="right">24000</td>
+<td align="right">12873000</td>
+<td align="right">12897000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1860898</td>
+<td align="right">99.81391</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1964</td>
+<td align="right">0</td>
+<td align="right">23000</td>
+<td align="right">11893000</td>
+<td align="right">11916000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1930178</td>
+<td align="right">99.80698</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1965</td>
+<td align="right">0</td>
+<td align="right">24000</td>
+<td align="right">13036000</td>
+<td align="right">13060000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1837672</td>
+<td align="right">99.81623</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1966</td>
+<td align="right">0</td>
+<td align="right">24000</td>
+<td align="right">14616000</td>
+<td align="right">14640000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1639344</td>
+<td align="right">99.83607</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1967</td>
+<td align="right">0</td>
+<td align="right">26000</td>
+<td align="right">15214000</td>
+<td align="right">15240000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1706037</td>
+<td align="right">99.82940</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1968</td>
+<td align="right">0</td>
+<td align="right">25000</td>
+<td align="right">15676000</td>
+<td align="right">15701000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1592255</td>
+<td align="right">99.84077</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1969</td>
+<td align="right">0</td>
+<td align="right">24000</td>
+<td align="right">16493000</td>
+<td align="right">16517000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1453048</td>
+<td align="right">99.85470</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1970</td>
+<td align="right">0</td>
+<td align="right">24000</td>
+<td align="right">20058000</td>
+<td align="right">20082000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1195100</td>
+<td align="right">99.88049</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1971</td>
+<td align="right">0</td>
+<td align="right">29000</td>
+<td align="right">20684000</td>
+<td align="right">20713000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1400087</td>
+<td align="right">99.85999</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1972</td>
+<td align="right">0</td>
+<td align="right">29000</td>
+<td align="right">19623000</td>
+<td align="right">19652000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1475677</td>
+<td align="right">99.85243</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1973</td>
+<td align="right">0</td>
+<td align="right">30000</td>
+<td align="right">19650000</td>
+<td align="right">19680000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1524390</td>
+<td align="right">99.84756</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1974</td>
+<td align="right">0</td>
+<td align="right">33000</td>
+<td align="right">22344000</td>
+<td align="right">22377000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1474729</td>
+<td align="right">99.85253</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1975</td>
+<td align="right">0</td>
+<td align="right">27000</td>
+<td align="right">19078000</td>
+<td align="right">19105000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1413243</td>
+<td align="right">99.85868</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1976</td>
+<td align="right">0</td>
+<td align="right">33000</td>
+<td align="right">23542000</td>
+<td align="right">23575000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1399788</td>
+<td align="right">99.86002</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1977</td>
+<td align="right">0</td>
+<td align="right">27000</td>
+<td align="right">21506000</td>
+<td align="right">21533000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1253889</td>
+<td align="right">99.87461</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1978</td>
+<td align="right">0</td>
+<td align="right">27000</td>
+<td align="right">25221000</td>
+<td align="right">25248000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1069392</td>
+<td align="right">99.89306</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1979</td>
+<td align="right">0</td>
+<td align="right">27000</td>
+<td align="right">27701000</td>
+<td align="right">27728000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0973745</td>
+<td align="right">99.90263</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1980</td>
+<td align="right">0</td>
+<td align="right">27000</td>
+<td align="right">30573000</td>
+<td align="right">30600000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0882353</td>
+<td align="right">99.91176</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1981</td>
+<td align="right">0</td>
+<td align="right">43000</td>
+<td align="right">27774000</td>
+<td align="right">27817000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1545817</td>
+<td align="right">99.84542</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1982</td>
+<td align="right">0</td>
+<td align="right">47000</td>
+<td align="right">28033000</td>
+<td align="right">28080000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1673789</td>
+<td align="right">99.83262</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1983</td>
+<td align="right">3000</td>
+<td align="right">35000</td>
+<td align="right">30155000</td>
+<td align="right">30193000</td>
+<td align="right">0.0099361</td>
+<td align="right">0.1159209</td>
+<td align="right">99.87414</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1984</td>
+<td align="right">3000</td>
+<td align="right">40000</td>
+<td align="right">26753000</td>
+<td align="right">26796000</td>
+<td align="right">0.0111957</td>
+<td align="right">0.1492760</td>
+<td align="right">99.83953</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1985</td>
+<td align="right">4000</td>
+<td align="right">12000</td>
+<td align="right">28032000</td>
+<td align="right">28048000</td>
+<td align="right">0.0142613</td>
+<td align="right">0.0427838</td>
+<td align="right">99.94295</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1986</td>
+<td align="right">5000</td>
+<td align="right">55000</td>
+<td align="right">28658000</td>
+<td align="right">28718000</td>
+<td align="right">0.0174107</td>
+<td align="right">0.1915175</td>
+<td align="right">99.79107</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1987</td>
+<td align="right">5000</td>
+<td align="right">52000</td>
+<td align="right">32087000</td>
+<td align="right">32144000</td>
+<td align="right">0.0155550</td>
+<td align="right">0.1617720</td>
+<td align="right">99.82267</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1988</td>
+<td align="right">6000</td>
+<td align="right">44000</td>
+<td align="right">31952000</td>
+<td align="right">32002000</td>
+<td align="right">0.0187488</td>
+<td align="right">0.1374914</td>
+<td align="right">99.84376</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1989</td>
+<td align="right">7000</td>
+<td align="right">54000</td>
+<td align="right">28795000</td>
+<td align="right">28856000</td>
+<td align="right">0.0242584</td>
+<td align="right">0.1871361</td>
+<td align="right">99.78861</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1990</td>
+<td align="right">7000</td>
+<td align="right">55000</td>
+<td align="right">31189000</td>
+<td align="right">31251000</td>
+<td align="right">0.0223993</td>
+<td align="right">0.1759944</td>
+<td align="right">99.80161</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1991</td>
+<td align="right">8000</td>
+<td align="right">56000</td>
+<td align="right">32305000</td>
+<td align="right">32369000</td>
+<td align="right">0.0247150</td>
+<td align="right">0.1730050</td>
+<td align="right">99.80228</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1992</td>
+<td align="right">9000</td>
+<td align="right">62000</td>
+<td align="right">34130000</td>
+<td align="right">34201000</td>
+<td align="right">0.0263150</td>
+<td align="right">0.1812812</td>
+<td align="right">99.79240</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1993</td>
+<td align="right">10000</td>
+<td align="right">53000</td>
+<td align="right">34809000</td>
+<td align="right">34872000</td>
+<td align="right">0.0286763</td>
+<td align="right">0.1519844</td>
+<td align="right">99.81934</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1994</td>
+<td align="right">10000</td>
+<td align="right">71000</td>
+<td align="right">34728000</td>
+<td align="right">34809000</td>
+<td align="right">0.0287282</td>
+<td align="right">0.2039702</td>
+<td align="right">99.76730</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1995</td>
+<td align="right">10000</td>
+<td align="right">62000</td>
+<td align="right">38238000</td>
+<td align="right">38310000</td>
+<td align="right">0.0261028</td>
+<td align="right">0.1618376</td>
+<td align="right">99.81206</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1996</td>
+<td align="right">10000</td>
+<td align="right">67000</td>
+<td align="right">37286000</td>
+<td align="right">37363000</td>
+<td align="right">0.0267644</td>
+<td align="right">0.1793218</td>
+<td align="right">99.79391</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1997</td>
+<td align="right">10000</td>
+<td align="right">76000</td>
+<td align="right">39082000</td>
+<td align="right">39168000</td>
+<td align="right">0.0255310</td>
+<td align="right">0.1940359</td>
+<td align="right">99.78043</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1998</td>
+<td align="right">10000</td>
+<td align="right">78000</td>
+<td align="right">43464000</td>
+<td align="right">43552000</td>
+<td align="right">0.0229611</td>
+<td align="right">0.1790963</td>
+<td align="right">99.79794</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">1999</td>
+<td align="right">11000</td>
+<td align="right">76000</td>
+<td align="right">43273000</td>
+<td align="right">43360000</td>
+<td align="right">0.0253690</td>
+<td align="right">0.1752768</td>
+<td align="right">99.79935</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2000</td>
+<td align="right">10000</td>
+<td align="right">76000</td>
+<td align="right">44625000</td>
+<td align="right">44711000</td>
+<td align="right">0.0223659</td>
+<td align="right">0.1699805</td>
+<td align="right">99.80765</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2001</td>
+<td align="right">11000</td>
+<td align="right">78000</td>
+<td align="right">46259000</td>
+<td align="right">46348000</td>
+<td align="right">0.0237335</td>
+<td align="right">0.1682921</td>
+<td align="right">99.80797</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2002</td>
+<td align="right">11000</td>
+<td align="right">77000</td>
+<td align="right">43948000</td>
+<td align="right">44036000</td>
+<td align="right">0.0249796</td>
+<td align="right">0.1748569</td>
+<td align="right">99.80016</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2003</td>
+<td align="right">11000</td>
+<td align="right">650000</td>
+<td align="right">41622000</td>
+<td align="right">42283000</td>
+<td align="right">0.0260152</td>
+<td align="right">1.5372608</td>
+<td align="right">98.43672</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2004</td>
+<td align="right">12000</td>
+<td align="right">2748000</td>
+<td align="right">46160000</td>
+<td align="right">48920000</td>
+<td align="right">0.0245298</td>
+<td align="right">5.6173344</td>
+<td align="right">94.35814</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2005</td>
+<td align="right">12000</td>
+<td align="right">1932000</td>
+<td align="right">47321000</td>
+<td align="right">49265000</td>
+<td align="right">0.0243581</td>
+<td align="right">3.9216482</td>
+<td align="right">96.05399</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2006</td>
+<td align="right">13000</td>
+<td align="right">2096000</td>
+<td align="right">49152000</td>
+<td align="right">51261000</td>
+<td align="right">0.0253604</td>
+<td align="right">4.0888785</td>
+<td align="right">95.88576</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2007</td>
+<td align="right">13000</td>
+<td align="right">900000</td>
+<td align="right">49070000</td>
+<td align="right">49983000</td>
+<td align="right">0.0260088</td>
+<td align="right">1.8006122</td>
+<td align="right">98.17338</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2008</td>
+<td align="right">12000</td>
+<td align="right">1960000</td>
+<td align="right">45233000</td>
+<td align="right">47205000</td>
+<td align="right">0.0254210</td>
+<td align="right">4.1521025</td>
+<td align="right">95.82248</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2009</td>
+<td align="right">10000</td>
+<td align="right">2205000</td>
+<td align="right">46131000</td>
+<td align="right">48346000</td>
+<td align="right">0.0206842</td>
+<td align="right">4.5608737</td>
+<td align="right">95.41844</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2010</td>
+<td align="right">11000</td>
+<td align="right">2205000</td>
+<td align="right">44852000</td>
+<td align="right">47068000</td>
+<td align="right">0.0233704</td>
+<td align="right">4.6847115</td>
+<td align="right">95.29192</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2011</td>
+<td align="right">12000</td>
+<td align="right">2205000</td>
+<td align="right">46349000</td>
+<td align="right">48566000</td>
+<td align="right">0.0247086</td>
+<td align="right">4.5402133</td>
+<td align="right">95.43508</td>
+</tr>
+<tr class="even">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2012</td>
+<td align="right">11000</td>
+<td align="right">2014000</td>
+<td align="right">45964000</td>
+<td align="right">47989000</td>
+<td align="right">0.0229219</td>
+<td align="right">4.1967951</td>
+<td align="right">95.78028</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="left">USA</td>
+<td align="right">2013</td>
+<td align="right">12000</td>
+<td align="right">2240000</td>
+<td align="right">47189000</td>
+<td align="right">49441000</td>
+<td align="right">0.0242714</td>
+<td align="right">4.5306527</td>
+<td align="right">95.44508</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>#USA&#39;s Soybean Production Use Over Time
 
 usa_production_history &lt;- soybean_use |&gt; 

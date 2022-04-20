@@ -11,7 +11,7 @@ editor_options:
 
 # Introduction
 
-Soybean production contributes to household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows. This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels -- consuming soy products and other food items like corn and grains directly rather than feeding them to animals. 
+Soybean is key ingredient in multiple household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows (~70%). This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels if we consumed soy products and other food items like corn and grains directly rather than feeding them to animals. 
 
 
 
@@ -168,4 +168,15 @@ ggplot(data = usa_production_history) +
   labs(title = "USA Total Soybean Production from 1961-2013")
 
 ```
+
+
+
+# Resources
+
+
+- https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-04-06/readme.md
+
+- https://ourworldindata.org/soy
+
+- https://www.dekalbasgrowdeltapine.com/en-us/agronomy/soybean-growth-stages.html
 
