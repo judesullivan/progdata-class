@@ -11,13 +11,13 @@ editor_options:
 
 # Introduction
 
-Soybean is key ingredient in multiple household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows (~70%). This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels if we consumed soy products and other food items like corn and grains directly rather than feeding them to animals. 
+Soybean is the key ingredient behind multiple household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows (~70%). This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels (i.e., if we consumed soy products and other food items, like corn and grains, directly rather than feeding them to animals). 
 
 
 
 # Objectives
 
-1. Identify which countries produced the most soybeans in 2013 and what they used it for
+1. Identify which countries produced the most soybean in 2013 and what they used it for
 
 + Ex: How much of the soybean that has been produced in recent years has been used for human compared to animal consumption? 
 
@@ -65,7 +65,7 @@ as_tibble(soybean_use)
 
 
 ```{r total}
-#Sums soybean production that is used for directly for human food, for animal food, and that is processed into other items like vegetable oil and biofuel
+#Sums soybean production that is used directly for human food, for animal food, and that is processed into other items
 
 soybean_use <- soybean_use|> 
   group_by(entity, code, year) |> 
@@ -138,7 +138,7 @@ kable(usa_soybean_use)
 usa_production_history <- soybean_use |> 
   filter(entity %in% "United States")
 
-#I truncated the following x axis to begin at 1980 since soybeans were not used for human food until 1983
+#I truncated the following x-axis to begin at 1980 since soybeans were not used for human food until 1983
 
 ggplot(data = usa_production_history) +
   aes(x = year,
