@@ -47,7 +47,19 @@ soybean_use <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 as_tibble(soybean_use)
 ```
 
-In this dataset, h
+
+### `soybean_use.csv` Variable Table
+
+|variable    |class     |description |
+|:-----------|:---------|:-----------|
+|entity      |character | Country|
+|code        |character | Country Code |
+|year        |double    | Year |
+|human_food  |double    | Use for human food (tempeh, tofu, etc) |
+|animal_feed |double    | Used for animal food |
+|processed   |double    | Processed into vegetable oil, biofuel, processed animal feed |
+
+
 
 ### Objective 1 - Global Comparisons
 
