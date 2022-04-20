@@ -25,7 +25,7 @@ Who produces the most soybean and what do they use it for?
 
 library(tidyverse)
 library(dplyr)
-library(ggthemes)
+library(ggforce)
 ```
 
 
@@ -87,10 +87,13 @@ soybean_use |>
 
 ## Plots!!
 ```{r soybean plots}
-#Entities with the top production in 2013
+#2013's Top 10 countries in soybean production 
 
 top_countries_2013 <- soybean_use_2013 |> 
   filter(entity %in% c("China", "United States", "Brazil", "Argentina", "India", "Germany", "Mexico", "Spain", "Paraguay", "Japan")) 
+
+
+as_tibble(top_countries_2013)
   
 
 ggplot(data = top_countries_2013) +
@@ -99,12 +102,36 @@ ggplot(data = top_countries_2013) +
   geom_bar(stat = "identity",
            color = "darkgreen",
            fill = "darkgreen") +
-  scale_x_discrete(guide = guide_axis(angle = 45)) 
+  scale_x_discrete(guide = guide_axis(angle = 45))
   
-  
-
 
 #How has production shifted in the United States over time?
+
+usa_production_history <- soybean_use |> 
+  filter(entity %in% "United States")
+
+ggplot(data = usa_production_history) +
+  aes(x = year,
+      y = human_food) +
+  geom_line(stat = "identity") +
+  coord_cartesian(xlim = c(1980,2013))
+
+ggplot(data = usa_production_history) +
+  aes(x = year,
+      y = animal_feed) +
+  geom_line(stat = "identity") +
+  facet_zoom(xlim = c(2000, 2013))
+
+ggplot(data = usa_production_history) +
+  aes(x = year,
+      y = processed) +
+  geom_line(stat = "identity")
+
+ggplot(data = usa_production_history) +
+  aes(x = year,
+      y = use_total) +
+  geom_line(stat = "identity") +
+  facet_zoom(xlim = c(2000, 2013))
 
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
