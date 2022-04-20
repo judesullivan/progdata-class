@@ -6,21 +6,25 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-![Soybean development.](images/soybean_development.jpg)
+![Soybean plant development](images/soybean_development.jpg)
 
-![Soybean.](images/soybean_1.jpg)
 
 # Introduction
 
 Soybean production contributes to household food items like tofu, edamame, tempeh, miso, soy sauce, and soy milk. However, most of the soybean that is produced is used to feed animals like cows. This is just one example of a resource that could be greatly conserved if humans ate at lower trophic levels -- consuming soy products and other food items like corn and grains directly rather than feeding them to animals. 
 
 
+
 # Objectives
 
 1. Identify which countries produced the most soybeans in 2013 and what they used it for
+
 + Ex: How much of the soybean that has been produced in recent years has been used for human compared to animal consumption? 
+
 2. Explore how soybean production and usage in the United States have changed over time
+
 + Ex: Has the popularity of soybean increased for human consumption in the United States over time?
+
 
 
 ## Setting Up
@@ -30,6 +34,7 @@ Soybean production contributes to household food items like tofu, edamame, tempe
 
 library(tidyverse)
 library(dplyr)
+library(knitr)
 library(ggforce)
 ```
 
@@ -42,8 +47,10 @@ soybean_use <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 as_tibble(soybean_use)
 ```
 
+In this dataset, h
 
 ### Objective 1 - Global Comparisons
+
 
 ```{r total}
 #Sums soybean production that is used for directly for human food, for animal food, and that is processed into other items like vegetable oil and biofuel
@@ -60,8 +67,7 @@ soybean_use_2013 <- soybean_use |>
   rowwise() |> 
   group_by(entity)  |>
   filter(year == 2013) |> 
-  arrange(-use_total) |> 
-  as_tibble()
+  arrange(-use_total) 
  
 #Finding percentage of human food, animal food, and processed item usage from the total
 
@@ -71,8 +77,9 @@ soybean_use_2013 |>
     human_percent = (human_food / use_total) * 100,
     animal_percent = (animal_feed / use_total) * 100,
     processed_percent = (processed / use_total) * 100
-    ) |> 
-  as_tibble()
+    )
+
+kable(soybean_use_2013)
 
 #2013's Top 10 countries in soybean production 
 
@@ -80,7 +87,7 @@ top_countries_2013 <- soybean_use_2013 |>
   filter(entity %in% c("China", "United States", "Brazil", "Argentina", "India", "Germany", "Mexico", "Spain", "Paraguay", "Japan")) 
 
 
-as_tibble(top_countries_2013)
+kable(top_countries_2013)
   
 
 ggplot(data = top_countries_2013) +
@@ -96,20 +103,23 @@ ggplot(data = top_countries_2013) +
 ```
 
 
+
 ### Objective 2 - Exploring the USA
+
 
 ```{r soybean plots}
 #Developing respective soybean usage percent variables for human, animal, and processed products
 
-soybean_use |> 
+usa_soybean_use <- soybean_use |> 
   group_by(entity) |> 
   mutate(
     human_percent = (human_food / use_total) * 100,
     animal_percent = (animal_feed / use_total) * 100,
     processed_percent = (processed / use_total) * 100
     ) |> 
-  filter(entity %in% "United States") |> 
-  as.data.frame()
+  filter(entity %in% "United States") 
+
+kable(usa_soybean_use)
   
 #USA's Soybean Production Use Over Time
 
