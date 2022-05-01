@@ -3,6 +3,7 @@
 #Lab 5A
 
 library(tidyverse)
+library(knitr)
 
 lotr  <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/lotr_tidy.csv") |> 
   rename(Species = Race)
@@ -55,7 +56,9 @@ family_longest <- family |>
     names_to = c("wave", "scale", "family_member"), 
     names_sep = "_",
     values_to = "score"
-  )
+  ) |> 
+  mutate(wave = stringr::str_replace(wave, "w", "")) |> 
+  mutate(wave = as.integer(wave))
 
 print(family_longest)
 
@@ -85,8 +88,13 @@ family |>
   group_by(family_id) |> 
   which(is.na(c(family)))
 
+#I could not figure out how to answer this with pivoting, so I used a filter instead! This was suggested by my  amazing, talented, brilliant, showstopping Becky Upton :D
 
-#use filter instead
+family_longest |> 
+  filter(wave == 2 & is.na(score)) |> 
+  kable()
+
+#It is easier to find the missing data in the long format!!
 
 
 
