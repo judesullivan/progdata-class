@@ -104,12 +104,13 @@ ggplot(iris) +
   theme_calc() +
   scale_color_calc()
 
-# Here is an updated boxplot with a 
+# Here is an updated boxplot with a title and customized colors!
+# Inspired by https://t-redactyl.io/blog/2016/04/creating-plots-in-r-using-ggplot2-part-10-boxplots.html
 
 ggplot(iris) +
   aes(y = Sepal.Length,
       x = Species) +
-  geom_boxplot()  +
+  geom_boxplot(fill =  "#4271AE", colour = "#1F3552")  +
   labs(title = "Iris Sepal Lengths by Species") +
   theme_bw()
 
