@@ -20,7 +20,6 @@ library(tidyverse)
 library(gapminder)
 library(ggforce)
 library(ggthemes)
-library(pander)
 
 ```
 
