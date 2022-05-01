@@ -6,7 +6,7 @@ output: html_document
 ---
 ```{r intro, include=FALSE}
 
-# For this lab, I am revisting Lab 3 and fancying up the plots following the later lectures about ggplot!
+# For this lab, I am revisiting Lab 3 and fancying up the plots following the later lectures about ggplot!
 
 ```
 
@@ -16,6 +16,7 @@ output: html_document
 
 library(tidyverse)
 library(gapminder)
+library(ggforce)
 
 ```
 
@@ -85,6 +86,8 @@ gapminder |>
 ## 1.5
 
 ```{r scatterplot, canada, lifeexp, gdp}
+#For the following two Canadian plots, I added titles and changed the color of the lines!
+
 gapminder |> 
   filter(country %in% "Canada")
 
@@ -94,14 +97,20 @@ canada <- filter(gapminder, country %in% "Canada")
 
 ggplot(canada) + 
 aes(x = gdpPercap, y = lifeExp) +
-  geom_point() 
+  geom_point() +
+  geom_smooth(color = "darkgreen") +
+  labs(title = "Life Expectancy in Canada from 1952-2007 by Gross 
+                   Domestic Product per Capita")
 
 #with log
 
 ggplot(canada) + 
 aes(x = gdpPercap, y = lifeExp) +
   geom_point() + 
-  scale_x_log10()
+  scale_x_log10() +
+  geom_smooth(color = "darkred") +
+  labs(title = "Life Expectancy in Canada from 1952-2007 by Gross 
+           Domestic Product per Capita (log scale)")
 
 ```
 
