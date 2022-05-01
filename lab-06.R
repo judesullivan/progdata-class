@@ -24,7 +24,7 @@ time |>
 # 3. Which songs do we have “year”, but not album info?
 
 time |> 
-  FILL_THIS_IN(album, by = "song")
+  left_join(album, by = "song")
 
 # 4. Which artists are in time, but not in album?
 
@@ -81,4 +81,4 @@ full_join(
 
 # 3. The rows contained in z are bad! Remove those rows from y.
 
-FILL_THIS_IN(FILL_THIS_IN, FILL_THIS_IN)
+anti_join(z, y)
