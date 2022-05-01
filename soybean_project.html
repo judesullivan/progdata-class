@@ -272,7 +272,7 @@ soybean_use &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordat
 </div>
 <div id="objective-1---global-comparisons" class="section level3">
 <h3>Objective 1 - Global Comparisons</h3>
-<pre class="r"><code>#Sums soybean production that is used for directly for human food, for animal food, and that is processed into other items like vegetable oil and biofuel
+<pre class="r"><code>#Sums soybean production that is used directly for human food, for animal food, and that is processed into other items
 
 soybean_use &lt;- soybean_use|&gt; 
   group_by(entity, code, year) |&gt; 
@@ -2936,7 +2936,7 @@ kable(usa_soybean_use)</code></pre>
 usa_production_history &lt;- soybean_use |&gt; 
   filter(entity %in% &quot;United States&quot;)
 
-#I truncated the following x axis to begin at 1980 since soybeans were not used for human food until 1983
+#I truncated the following x-axis to begin at 1980 since soybeans were not used for human food until 1983
 
 ggplot(data = usa_production_history) +
   aes(x = year,
