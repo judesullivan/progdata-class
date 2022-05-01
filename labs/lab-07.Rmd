@@ -14,7 +14,7 @@ output: html_document
 
 
 ```{r setup, include=FALSE}
-# I orginally only loaded the tidyverse and gapminder packages, but I have also loaded the ggforce, ggthemes, and viridis packages for this lab in order to customize my plots!
+# I orginally only loaded the tidyverse and gapminder packages, but I have also loaded the ggforce and ggthemes packages for this lab in order to customize my plots!
 
 library(tidyverse)
 library(gapminder)
