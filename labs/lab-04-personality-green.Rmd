@@ -51,7 +51,7 @@ green_data |>
   unlist() |> 
   unique()
 
-#since we identified -99 as a value in the dataset, we can now recode
+#since we identified ~weird~ -99 as a value in the dataset, we can now recode into NA
 
 green_data <- green_data |> 
   mutate(
@@ -61,6 +61,12 @@ green_data <- green_data |>
            )
   )
   
+```
+
+## 2. Compute total scores for the four scales. Recode variables as needed.
+
+```{r total scores - recoding variables}
+
 #reverse coding specific items; either look at the keying in the dictionary and write them down or select keying and filter
 
 dictionary |> 
@@ -86,22 +92,26 @@ green_data <- green_data |>
     )
   )
 
-#computing total scores 
+#now that recoding is complete, we can compute the total scores
 
 green_data <- green_data |> 
   rowwise() |> 
   mutate(
+    .id = id,
     green_total = mean(c_across(green1:green5), na.rm = TRUE),
     comp_total = mean(c_across(comp1:comp10), na.rm = TRUE),
     intel_total = mean(c_across(intel1:intel10), na.rm = TRUE),
     open_total = mean(c_across(open1:open10), na.rm = TRUE),
-    .after = id
-  ) |> 
+    .before = everything()) |> 
   ungroup()
   
-#that does not seem to work hehe
 
-#pomping
+
+```
+
+## 3.Rescale the variables so that they go from 0-100 instead of the original range. Name the recaled variables *_pomp.
+
+```{r rescale}
 
 green_data <- green_data |> 
   mutate(
@@ -112,12 +122,43 @@ green_data <- green_data |>
     )
   )
 
-#plotting
+```
+
+## 4. Make plots that illustrate the distributions of the 4 POMP-scored variables.
+
+```{r plots}
+#green plot
 
 ggplot(green_data) +
   aes(x = green_total_pomp) +
   geom_histogram()
 
+
+#comp plot
+
+ggplot(green_data) +
+  aes(x = comp_total_pomp) +
+  geom_histogram()
+
+
+#intel plot
+
+ggplot(green_data) +
+  aes(x = intel_total_pomp) +
+  geom_histogram()
+
+
+#open plot 
+
+ggplot(green_data) +
+  aes(x = open_total_pomp) +
+  geom_histogram()
+
+```
+
+## 5. Make scatterplots showing the relationships between green reputation and each personality trait. Include trend lines for students and non-students. What do these plots show?
+
+```{r personality scatterplots}
 #dropping NA students and creating linear lines
 
 green_data |> 
@@ -129,52 +170,37 @@ green_data |>
 
 ```
 
-```{r graphs/summaries}
-green_data |> 
-  rowwise() |> 
-  summarize(
-    mean = mean(l),
-    sd = sd(lifeExp)
-  )
-
-
-ggplot(green_data) + 
-aes(x = greenrep, y = compassion) +
-  geom_point() 
-```
-
-## 2. Compute total scores for the four scales. Recode variables as needed.
-
-```{r total scores}
-
-```
-
-## 3.Rescale the variables so that they go from 0-100 instead of the original range. Name the recaled variables *_pomp.
-
-```{r rescale}
-
-```
-
-## 4. Make plots that illustrate the distributions of the 4 POMP-scored variables.
-
-```{r plots}
-
-```
-
-## 5. Make scatterplots showing the relationships between green reputation and each personality trait. Include trend lines for students and non-students. What do these plots show?
-
-```{r personality scatterplots}
-
-```
-
 ## 6. Compare green reputation for students and non-students using a rainfall plot (bar + density + data points).
 
 ```{r rainfall plot}
+
+green_data <- green_data|> 
+  mutate(
+    green_data,
+    Student = factor(student, levels = c("1", "2"), labels = c("no", "yes"))
+  )
+
+green_data |> 
+  filter(!is.na(Student)) |> 
+  ggplot() +
+  aes(x = green_total_pomp, 
+      color = factor(Student),
+      fill = factor(Student)) +
+  geom_bar() +
+  geom_density() +
+  geom_jitter()
+  
 
 ```
 
 ## 7. Compute a summary table of means, SDs, medians, minima, and maxima for the four total scores for students and non-students.
 
 ```{r summary table}
+
+green_data |> 
+  group_by(student) |>
+  summarize(
+    across(green_total_pomp:open_total_pomp)
+  )
 
 ```
