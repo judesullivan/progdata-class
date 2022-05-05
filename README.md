@@ -4,7 +4,7 @@
 
 Welcome everyone! My name is Jude and I am a senior at the *University of South Florida*. 
 I am majoring in **Psychology** and **Aging Sciences**. In the fall, I will be joining
-the Underrepresented Perspectives (UP) Laboratory at Penn State, directed by Dr. Jes Matsick,
+the **Underrepresented Perspectives (UP)** Laboratory at Penn State, directed by Dr. Jes Matsick,
 as a graduate student in the **Social Psychology** area. Hopefully, I will be able to pursue 
 dual-title M.Sc. and Ph.D. degrees in the Women's, Gender, and Sexuality Studies area as well.
 
