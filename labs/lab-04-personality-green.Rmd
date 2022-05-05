@@ -12,6 +12,7 @@ output: html_document
 
 library(tidyverse)
 library(dplyr)
+library(psych)
 ```
 
 
@@ -173,23 +174,25 @@ green_data |>
 ## 6. Compare green reputation for students and non-students using a rainfall plot (bar + density + data points).
 
 ```{r rainfall plot}
-
-green_data <- green_data|> 
-  mutate(
-    green_data,
-    Student = factor(student, levels = c("1", "2"), labels = c("no", "yes"))
-  )
-
-green_data |> 
-  filter(!is.na(Student)) |> 
-  ggplot() +
-  aes(x = green_total_pomp, 
-      color = factor(Student),
-      fill = factor(Student)) +
-  geom_bar() +
-  geom_density() +
-  geom_jitter()
+#referenced from lab 3's rainfall plot!
   
+green_data |> 
+  filter(!is.na(student)) |> 
+  ggplot() +
+  aes(y = factor(student),
+      x = green_total_pomp,
+      fill = factor(student),
+      color = factor(student)) +
+  geom_jitter(height = .15) +
+  geom_boxplot(color = "black",
+               alpha = .5,
+               width = .1,
+               size = .5) +
+  ggdist::stat_slab(height = .3,
+                    color = "black",
+                    size = .2,
+                    alpha = .5,
+                    position = position_nudge(y = .2))
 
 ```
 
@@ -197,10 +200,6 @@ green_data |>
 
 ```{r summary table}
 
-green_data |> 
-  group_by(student) |>
-  summarize(
-    across(green_total_pomp:open_total_pomp)
-  )
+describeBy(green_data, group = green_data$student)
 
 ```
