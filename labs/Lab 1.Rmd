@@ -38,11 +38,11 @@ Fun fact: I have visited 7 countries:
 - Malta
 - England
 
-![Picture of Mdina, Malta](malta.jpg)
+![Picture of Mdina, Malta](images/malta.jpg)
 
-![Picture of Genoa, Italy](genoa.jpg)
+![Picture of Genoa, Italy](images/genoa.jpg)
 
-![Picture in Sicily, Italy](sicily.jpg)
+![Picture in Sicily, Italy](images/sicily.jpg)
 
 
 

@@ -88,7 +88,7 @@ family |>
   group_by(family_id) |> 
   which(is.na(c(family)))
 
-#I could not figure out how to answer this with pivoting, so I used a filter instead! This was suggested by my  amazing, talented, brilliant, showstopping Becky Upton :D
+#I could not figure out how to answer this with pivoting, so I used a filter instead! This was suggested by my amazing, talented, brilliant, showstopping classmate, Becky Upton :D
 
 family_longest |> 
   filter(wave == 2 & is.na(score)) |> 

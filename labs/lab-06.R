@@ -1,3 +1,10 @@
+#Lab 6
+
+# Load package
+
+library(dplyr)
+library(readr)
+
 # Exercise 1 - Singer
 
 songs <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/songs.csv")

@@ -91,7 +91,7 @@ ggplot(iris) +
 ## 2.2
 
 ```{r summary, scatterplot, categorical}
-#Here, I added colored the plot by species, added a title, and then used a new theme that mimics the defaults of LibreOffice Calc graphs.
+#Here, I added colored the plot by species, added a ~bold~ title, and then used a new theme that mimics the defaults of LibreOffice Calc graphs.
 
 iris |> 
   group_by(Species) |> 
@@ -102,21 +102,23 @@ ggplot(iris) +
   geom_point() +
   labs(title = "Iris Sepal Lengths by Species") +
   theme_calc() +
-  scale_color_calc()
+  scale_color_calc() +
+  theme(plot.title = element_text(face = "bold"))
 
 
-# Here is an updated boxplot with a title and customized colors!
-# Inspired by https://t-redactyl.io/blog/2016/04/creating-plots-in-r-using-ggplot2-part-10-boxplots.html
+# Here is an updated boxplot with a ~bolded AND italicized~ title and customized colors!
+# Colors inspired by https://t-redactyl.io/blog/2016/04/creating-plots-in-r-using-ggplot2-part-10-boxplots.html
 
 ggplot(iris) +
   aes(y = Sepal.Length,
       x = Species) +
   geom_boxplot(fill =  "#4271AE", colour = "#1F3552")  +
   labs(title = "Iris Sepal Lengths by Species") +
-  theme_bw()
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold.italic"))
 
 
-# Finally, I added a title and the newer Excel theme to this raincloud plot
+# Finally, I added a title, an ~italicized~ subtitle, and the newer Excel theme to this raincloud plot :)
 
 ggplot(iris) +
   aes(y = Species,
@@ -134,10 +136,12 @@ ggplot(iris) +
                     alpha = .5,
                     position = position_nudge(y = .2)) +
   labs(title = "Density and Distribution of Iris Sepal Length 
-       by Species") +
+       by Species",
+       subtitle = "Feat. iris virginica, versicolor, and setosa") +
   theme_excel_new() +
   scale_color_excel_new() +
-  scale_fill_excel_new()
+  scale_fill_excel_new() +
+  theme(plot.subtitle = element_text(face = "italic"))
 
 ```
 
