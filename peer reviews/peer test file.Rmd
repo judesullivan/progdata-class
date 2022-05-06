@@ -1,0 +1,97 @@
+ ---
+title: "Lab-03-ggplot2-dplyr"
+author: "Priya Singh Collins"
+date: "2/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gapminder)
+```
+
+# Exercise 1
+
+# 1.1
+```{r}
+gapminder |>
+  filter(country == "Afghanistan" | country == "Albania" | country == "Algeria")
+```
+
+# 1.2
+```{r}
+gapminder |>
+  filter(country == "Afghanistan" | country == "Albania" | country == "Algeria") |>
+  select(country, gdpPercap)
+```
+
+# 1.3
+```{r}
+new_gap <- gapminder |>
+  group_by(country) |>
+  mutate(lifeExp_change = lifeExp - lag(lifeExp)) |>
+  filter(lifeExp_change < 0) |>
+  arrange(lifeExp_change)
+  
+new_gap
+```
+
+# 1.4
+```{r}
+gapminder |>
+  group_by(country) |>
+  mutate(maxGDP = max(gdpPercap)) |>
+  filter(maxGDP == gdpPercap)
+```
+
+# 1.5
+```{r}
+canada <- gapminder |>
+  filter(country == "Canada")
+
+canada
+
+ggplot(data = canada) +
+  aes(x = lifeExp, y = log(gdpPercap)) +
+  geom_point()
+```
+
+# Exercise 2
+
+# 2.1
+```{r}
+library(palmerpenguins)
+
+penguinsdata <- palmerpenguins::penguins
+
+penguinsdata |>
+  summarize(mean(flipper_length_mm, na.rm = TRUE), mean(body_mass_g, na.rm = TRUE), range(flipper_length_mm, na.rm = TRUE), range(body_mass_g, na.rm = TRUE))
+
+ggplot(data = penguinsdata) +
+  aes(x = body_mass_g, y = flipper_length_mm) +
+  geom_point()
+
+```
+
+# 2.2
+```{r}
+penguinsdata |>
+  group_by(species) |>
+  summarize(mean(flipper_length_mm, na.rm = TRUE), mean(body_mass_g, na.rm = TRUE))
+
+ggplot(data = penguinsdata) +
+  aes(y = species, x = body_mass_g, fill = species) +
+  geom_boxplot( color = "black",
+                alpha = .5,
+                width = .1,
+                size = .5) +
+  geom_jitter(height = .15,
+              alpha = .2) +
+  ggdist::stat_slab(height = .3,
+                    color = "black",
+                    size = .2, 
+                    alpha = .5,
+                    position = position_nudge(y = .2))
+```
+
